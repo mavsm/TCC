@@ -23,29 +23,19 @@ void draw() {
   G.draw();
 }
 
-/*
-void cells() {
-  int[][] temp = new int[N][M];
-  reset(temp);
-  for (int i=1; i<maze.length-1; i++) 
-    for (int j=1; j<maze[i].length-1; j++) {
-      temp[i][j] = maze[i][j];
-      int sum = maze[i+1][j] + maze[i][j+1] + maze[i-1][j] + maze[i][j-1];
-      sum += maze[i+1][j+1] + maze[i-1][j+1] + maze[i-1][j-1] + maze[i+1][j-1];
-      if (maze[i][j] == 1) {
-        if (sum < 6)
-          temp[i][j] = 0;
-      } else if (sum > 5)
-        temp[i][j] = 1;
-    }
-  maze = temp;
-}*/
 void keyPressed() {
   if (key == ' ') {
     G.reset(G.maze);
     G.generate();
   } else if(key == 'a'){
     G.smooth();
+  } else if(key == 's'){
+    G.changeMode();
+  } else if(key == 'c'){
+    if(G.checkCompletion())
+      print("Completável!!\n");
+    else
+      print("Não completável...\n");
   }
   redraw();
 }

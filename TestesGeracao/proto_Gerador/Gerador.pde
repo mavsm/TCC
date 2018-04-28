@@ -2,11 +2,15 @@
 // 0 = espaço livre
 
 class Gerador {
+
+  /////////// VARIÁVEIS //////////////
   int N, M;
   int[][] maze;
   int rodadas;
   String TYPE;
+  int[] start = {0, 0}, end = {0, 0};
 
+  /////////// INICIALIZADOR /////////
   Gerador(int N, int M, int rodadas, String TYPE) {
     this.TYPE = TYPE;
     this.N = N;
@@ -14,6 +18,39 @@ class Gerador {
     this.rodadas = rodadas;
     maze = new int[N][M];
     reset(maze);
+  }
+
+  /////////// FUNÇÕES DE CONTROLE ///
+
+  void draw() {
+    for (int i=0; i<maze.length; i++)
+      for (int j=0; j<maze[i].length; j++) {
+        if (maze[i][j] == 1)
+          fill(50);
+        else
+          fill(250, 250, 250 + maze[i][j]*2);
+        rect(i*stepX, j*stepY, stepX, stepY);
+      }
+    fill(200, 20, 20);
+    rect(stepX*end[0], stepY*end[1], stepX, stepY);
+
+    fill(20, 200, 20);
+    rect(stepX*start[0], stepY*start[1], stepX, stepY);
+  }
+
+  void changeMode() {
+    switch(TYPE) {
+    case "BINARY_PARTITION":
+      TYPE = "RANDOM_CHOICE";
+      break;
+    case "RANDOM_CHOICE":
+      TYPE = "SINGLE_CHANCE";
+      break;
+    case "SINGLE_CHANCE":
+      TYPE = "BINARY_PARTITION";
+      break;
+    }
+    print("Tipo de geração mudado para " + TYPE + "\n");
   }
 
   void reset(int[][] array) {
@@ -40,18 +77,19 @@ class Gerador {
     maze = temp;
   }
 
+  /////////// FUNÇÕES GERADORAS ////////
   void generate() {
     switch(TYPE) {
     case "BINARY_PARTITION":
       partition(1, maze.length-1, 1, maze[0].length-1, 0);
-      for(int i=1; i < maze.length-1; i++)
-        for(int j=1; j<maze[0].length-1; j++){
-          if(maze[i][j] == 0) maze[i][j] = 1;
+      for (int i=1; i < maze.length-1; i++)
+        for (int j=1; j<maze[0].length-1; j++) {
+          if (maze[i][j] == 0) maze[i][j] = 1;
           else maze[i][j] = 0;
         }
       break;
     case "RANDOM_CHOICE":
-      for (int i=0; i<rodadas; i++) {
+      for (int i=0; i<rodadas*300; i++) {
         int x = (int)random(1, maze.length - 1);
         int y = (int)random(1, maze[0].length - 1);
         maze[x][y] = 0;
@@ -63,21 +101,38 @@ class Gerador {
           if (random(1) > .55)
             maze[i][j] = 0;
     } // FIM DO SWICTH
+
+    //gera começo e fim
+    //while(maze[start[0]][start[1]] != 0)
+    start[0] = (int)random(1, N-1); 
+    start[1] = (int)random(1, M-1);
+    //while(maze[end[0]][end[1]] != 0)
+    end[0] = (int)random(1, N-1); 
+    end[1] = (int)random(1, M-1);
+
+    maze[start[0]][start[1]] = 0;
+    maze[end[0]][end[1]] = 0;
   }
 
   void partition(int xs, int xe, int ys, int ye, int depth) {
     if (depth%2 == 0) {
+      if (xe - xs <= 2) return;
       int nx = xs + (int)random(xe-xs);
       for (int i=ys; i<ye; i++)
         maze[nx][i] = 0;
+      int door = (int)random(ys, ye);
+      maze[nx][door] = 1;
       if (depth < rodadas) {
         partition(xs, nx, ys, ye, depth+1);
         partition(nx, xe, ys, ye, depth+1);
       }
     } else {
+      if (ye - ys <=2) return;
       int ny = ys + (int)random(ye-ys);
       for (int i=xs; i<xe; i++)
         maze[i][ny] = 0;
+      int door = (int)random(xs, xe);
+      maze[door][ny] = 1;
       if (depth < rodadas) {
         partition(xs, xe, ny, ye, depth+1);
         partition(xs, xe, ys, ny, depth+1);
@@ -85,14 +140,32 @@ class Gerador {
     }
   }
 
-  void draw() {
-    for (int i=0; i<maze.length; i++)
-      for (int j=0; j<maze[i].length; j++) {
-        if (maze[i][j] == 1)
-          fill(10);
-        else
-          fill(250);
-        rect(i*stepX, j*stepY, stepX, stepY);
+  boolean checkCompletion() {
+    int[][] stack = new int[(N-1)*(M-1)][2];
+    int begin = 0, stop = 1;
+    stack[0] = start;
+    while (begin != stop) {
+      int[] current = stack[begin];
+      begin++;
+      for (int i=-1; i<2; i+=2) {
+        if (maze[current[0]+i][current[1]] == 0) {
+          if (current[0]+i == end[0] && current[1]== end[1]) return true;
+          maze[current[0]+i][current[1]] = maze[current[0]][current[1]]-1;
+          stack[stop][0] = current[0]+i;
+          stack[stop][1] = current[1];
+          stop++;
+        }
       }
+      for (int j=-1; j<2; j+=2) {
+        if (maze[current[0]][current[1]+j] == 0) {
+          if (current[0] == end[0] && current[1]+j == end[1]) return true;
+          maze[current[0]][current[1]+j] = maze[current[0]][current[1]]-1;
+          stack[stop][0] = current[0];
+          stack[stop][1] = current[1]+j;
+          stop++;
+        }
+      }
+    }
+    return false;
   }
 }
