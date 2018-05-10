@@ -115,28 +115,46 @@ class Gerador {
   }
 
   void partition(int xs, int xe, int ys, int ye, int depth) {
-    if (depth%2 == 0) {
-      if (xe - xs <= 2) return;
-      int nx = xs + (int)random(xe-xs);
-      for (int i=ys; i<ye; i++)
-        maze[nx][i] = 0;
-      int door = (int)random(ys, ye);
-      maze[nx][door] = 1;
-      if (depth < rodadas) {
-        partition(xs, nx, ys, ye, depth+1);
-        partition(nx, xe, ys, ye, depth+1);
-      }
-    } else {
-      if (ye - ys <=2) return;
-      int ny = ys + (int)random(ye-ys);
-      for (int i=xs; i<xe; i++)
-        maze[i][ny] = 0;
+    if(rodadas < depth) return;
+    char decide = 'x';
+    if(xe-xs > ye-ys) decide = 'y';
+    else if(xe-xs < ye-ys) decide = 'x';
+    else {
+      if (random(1) < 0.5) decide = 'y';
+    }
+    if (decide == 'x') { //corto no axis x
+      if(ye-ys<=5) return;
+      
+      int corte = ys + (int)random(ye-ys-2)+1;
+      for(int i=xs; i<xe; i++)
+        maze[i][corte] = 0;
+      
       int door = (int)random(xs, xe);
-      maze[door][ny] = 1;
-      if (depth < rodadas) {
-        partition(xs, xe, ny, ye, depth+1);
-        partition(xs, xe, ys, ny, depth+1);
-      }
+      maze[door][corte] = 1; //passagem
+      if(xs!=1 && maze[xs-1][corte]==1)
+        maze[xs][corte] = 1; //passagem em t
+      if(xe!=maze.length-1 && maze[xe][corte] == 1)
+        maze[xe-1][corte] = 1; //passagem em t
+      
+      partition(xs, xe, corte+1, ye, depth+1);
+      partition(xs, xe, ys, corte, depth+1);
+      
+    } else { //corto no axis y
+      if(xe-xs<=3) return;
+      
+      int corte = xs + (int)random(xe-xs-2)+1;
+      for(int i=ys; i<ye; i++)
+        maze[corte][i] = 0;
+      
+      int door = (int)random(ys, ye);
+      maze[corte][door] = 1; //passagem
+      if(ys!=1 && maze[corte][ys-1]==1)
+        maze[corte][ys] = 1; //passagem em t
+      if(ye!=maze[0].length-1 && maze[corte][ye] == 1)
+        maze[corte][ye-1] = 1; //passagem em t
+      
+      partition(corte+1, xe, ys, ye, depth+1);
+      partition(xs, corte, ys, ye, depth+1);
     }
   }
 
@@ -149,7 +167,7 @@ class Gerador {
       begin++;
       for (int i=-1; i<2; i+=2) {
         if (maze[current[0]+i][current[1]] == 0) {
-          if (current[0]+i == end[0] && current[1]== end[1]) return true;
+          //if (current[0]+i == end[0] && current[1]== end[1]) return true;
           maze[current[0]+i][current[1]] = maze[current[0]][current[1]]-1;
           stack[stop][0] = current[0]+i;
           stack[stop][1] = current[1];
@@ -158,7 +176,7 @@ class Gerador {
       }
       for (int j=-1; j<2; j+=2) {
         if (maze[current[0]][current[1]+j] == 0) {
-          if (current[0] == end[0] && current[1]+j == end[1]) return true;
+          //if (current[0] == end[0] && current[1]+j == end[1]) return true;
           maze[current[0]][current[1]+j] = maze[current[0]][current[1]]-1;
           stack[stop][0] = current[0];
           stack[stop][1] = current[1]+j;
