@@ -30,7 +30,7 @@ void keyPressed() {
   } else if(key == 'a'){
     G.smooth();
   } else if(key == 's'){
-    G.changeMode();
+//    G.changeMode();
   } else if(key == 'c'){
     if(G.checkCompletion())
       print("Completável!!\n");

@@ -38,21 +38,6 @@ class Gerador {
     rect(stepX*start[0], stepY*start[1], stepX, stepY);
   }
 
-  void changeMode() {
-    switch(TYPE) {
-    case "BINARY_PARTITION":
-      TYPE = "RANDOM_CHOICE";
-      break;
-    case "RANDOM_CHOICE":
-      TYPE = "SINGLE_CHANCE";
-      break;
-    case "SINGLE_CHANCE":
-      TYPE = "BINARY_PARTITION";
-      break;
-    }
-    print("Tipo de geração mudado para " + TYPE + "\n");
-  }
-
   void reset(int[][] array) {
     for (int i=0; i<array.length; i++) {
       for (int j=0; j<array[i].length; j++)
@@ -88,18 +73,7 @@ class Gerador {
           else maze[i][j] = 0;
         }
       break;
-    case "RANDOM_CHOICE":
-      for (int i=0; i<rodadas*300; i++) {
-        int x = (int)random(1, maze.length - 1);
-        int y = (int)random(1, maze[0].length - 1);
-        maze[x][y] = 0;
-      }
-      break;
-    case "SINGLE_CHANCE":
-      for (int i=1; i<maze.length-1; i++)
-        for (int j=1; j< maze[0].length-1; j++)
-          if (random(1) > .55)
-            maze[i][j] = 0;
+    
     } // FIM DO SWICTH
 
     //gera começo e fim
@@ -114,15 +88,25 @@ class Gerador {
     maze[end[0]][end[1]] = 0;
   }
 
+  char decideCut(int xs, int xe, int ys, int ye){
+    int dify = ye-ys, difx = xe-xs;
+    char decide = 'x';
+    float path = random(1);
+    if(difx == dify || path < 0.4) {//pega um axis qualquer
+      if(random(1) < 0.5) decide = 'y';
+    }
+    else if(path < 1){ //pega o menor axis
+      if (dify < difx) decide = 'y';
+    } else { //pega o maior axis
+      if(dify > difx) decide = 'y';
+    }
+    return decide;
+  }
+
   void partition(int xs, int xe, int ys, int ye, int depth) {
     if(rodadas < depth) return;
-    char decide = 'x';
-    if(xe-xs > ye-ys) decide = 'y';
-    else if(xe-xs < ye-ys) decide = 'x';
-    else {
-      if (random(1) < 0.5) decide = 'y';
-    }
-    if (decide == 'x') { //corto no axis x
+    
+    if (decideCut(xs, xe, ys, ye) == 'x') { //corto no axis x
       if(ye-ys<=5) return;
       
       int corte = ys + (int)random(ye-ys-2)+1;
