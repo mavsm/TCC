@@ -9,6 +9,7 @@ class Gerador {
   int rodadas;
   String TYPE;
   int[] start = {0, 0}, end = {0, 0};
+  int[][] neighbor = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
 
   /////////// INICIALIZADOR /////////
   Gerador(int N, int M, int rodadas, String TYPE) {
@@ -78,12 +79,29 @@ class Gerador {
 
     //gera começo e fim
     //while(maze[start[0]][start[1]] != 0)
-    start[0] = (int)random(1, N-1); 
-    start[1] = (int)random(1, M-1);
-    //while(maze[end[0]][end[1]] != 0)
-    end[0] = (int)random(1, N-1); 
-    end[1] = (int)random(1, M-1);
-
+    int[] temp = {(int)random(1, N-1), (int)random(1, M/3)};
+    
+    start[0] = temp[0];
+    start[1] = temp[1];
+    for(int i=0; maze[temp[0]][temp[1]] == 1; i++) {
+      temp[0] = start[0] + neighbor[i][0];
+      temp[1] = start[1] + neighbor[i][1];
+    }
+    start[0] = temp[0];
+    start[1] = temp[1];
+    
+    
+    temp[0] = (int)random(1, N-1); 
+    temp[1] = (int)random(2*M/3, M-1);
+    end[0] = temp[0];
+    end[1] = temp[1];
+    for(int i=0; maze[temp[0]][temp[1]] == 1; i++) {
+      temp[0] = end[0] + neighbor[i][0];
+      temp[1] = end[1] + neighbor[i][1];
+    }
+    end[0] = temp[0];
+    end[1] = temp[1];
+    
     maze[start[0]][start[1]] = 0;
     maze[end[0]][end[1]] = 0;
   }
