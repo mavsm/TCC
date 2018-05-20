@@ -10,6 +10,9 @@ class Gerador {
   String TYPE;
   int[] start = {0, 0}, end = {0, 0};
   int[][] neighbor = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+  int diffBase = 5;
+  int diffVar = 2;
+
 
   /////////// INICIALIZADOR /////////
   Gerador(int N, int M, int rodadas, String TYPE) {
@@ -29,7 +32,7 @@ class Gerador {
         if (maze[i][j] == 1)
           fill(50);
         else
-          fill(250, 250, 250 + maze[i][j]*2);
+          fill(250+maze[i][j]*25, 250, 250);
         rect(i*stepX, j*stepY, stepX, stepY);
       }
     fill(200, 20, 20);
@@ -41,124 +44,119 @@ class Gerador {
 
   void reset(int[][] array) {
     for (int i=0; i<array.length; i++) {
-      for (int j=0; j<array[i].length; j++)
-        array[i][j] = 1; //inicializa tudo como parede
-    }
-  }
-
-  void smooth() {  
-    int[][] temp = new int[N][M];
-    reset(temp);
-    for (int i=1; i<maze.length-1; i++) 
-      for (int j=1; j<maze[i].length-1; j++) {
-        temp[i][j] = maze[i][j];
-        int sum = maze[i+1][j] + maze[i][j+1] + maze[i-1][j] + maze[i][j-1];
-        sum += maze[i+1][j+1] + maze[i-1][j+1] + maze[i-1][j-1] + maze[i+1][j-1];
-        if (maze[i][j] == 1) {
-          if (sum < 5)
-            temp[i][j] = 0;
-        } else if (sum > 6)
-          temp[i][j] = 1;
+      for (int j=0; j<array[i].length; j++) {
+        if (j==0 || j==array[i].length-1 || i==0 || i==array.length-1)
+          array[i][j] = 1; //inicializa como parede
+        else
+          array[i][j] = 0; //inicializa livre
       }
-    maze = temp;
+    }
   }
 
   /////////// FUNÇÕES GERADORAS ////////
   void generate() {
-    switch(TYPE) {
-    case "BINARY_PARTITION":
-      partition(1, maze.length-1, 1, maze[0].length-1, 0);
-      for (int i=1; i < maze.length-1; i++)
-        for (int j=1; j<maze[0].length-1; j++) {
-          if (maze[i][j] == 0) maze[i][j] = 1;
-          else maze[i][j] = 0;
-        }
-      break;
+    partition(1, maze.length-1, 1, maze[0].length-1, 0);
     
-    } // FIM DO SWICTH
 
     //gera começo e fim
-    //while(maze[start[0]][start[1]] != 0)
     int[] temp = {(int)random(1, N-1), (int)random(1, M/3)};
-    
+
     start[0] = temp[0];
     start[1] = temp[1];
-    for(int i=0; maze[temp[0]][temp[1]] == 1; i++) {
+    for (int i=0; maze[temp[0]][temp[1]] == 1; i++) {
       temp[0] = start[0] + neighbor[i][0];
       temp[1] = start[1] + neighbor[i][1];
     }
     start[0] = temp[0];
     start[1] = temp[1];
-    
-    
+
+
     temp[0] = (int)random(1, N-1); 
     temp[1] = (int)random(2*M/3, M-1);
     end[0] = temp[0];
     end[1] = temp[1];
-    for(int i=0; maze[temp[0]][temp[1]] == 1; i++) {
+    for (int i=0; maze[temp[0]][temp[1]] == 1; i++) {
       temp[0] = end[0] + neighbor[i][0];
       temp[1] = end[1] + neighbor[i][1];
     }
     end[0] = temp[0];
     end[1] = temp[1];
-    
+
     maze[start[0]][start[1]] = 0;
     maze[end[0]][end[1]] = 0;
   }
 
-  char decideCut(int xs, int xe, int ys, int ye){
+  char decideCut(int xs, int xe, int ys, int ye) {
     int dify = ye-ys, difx = xe-xs;
     char decide = 'x';
     float path = random(1);
-    if(difx == dify || path < 0.4) {//pega um axis qualquer
-      if(random(1) < 0.5) decide = 'y';
-    }
-    else if(path < 1){ //pega o menor axis
+    if (difx == dify || path < 0.4) {//pega um axis qualquer
+      if (random(1) < 0.5) decide = 'y';
+    } else if (path < 1) { //pega o menor axis
       if (dify < difx) decide = 'y';
     } else { //pega o maior axis
-      if(dify > difx) decide = 'y';
+      if (dify > difx) decide = 'y';
     }
     return decide;
   }
 
   void partition(int xs, int xe, int ys, int ye, int depth) {
-    if(rodadas < depth) return;
-    
+    if (rodadas < depth) { 
+      int[] s = {xs, ys}, e = {xe, ye};
+      paintByDifficulty(s, e);
+      return;
+    }
+
     if (decideCut(xs, xe, ys, ye) == 'x') { //corto no axis x
-      if(ye-ys<=5) return;
-      
+      if (ye-ys<=5) { 
+        int[] s = {xs, ys}, e = {xe, ye};
+        paintByDifficulty(s, e);
+        return;
+      }
+
       int corte = ys + (int)random(ye-ys-2)+1;
-      for(int i=xs; i<xe; i++)
-        maze[i][corte] = 0;
-      
+      for (int i=xs; i<xe; i++)
+        maze[i][corte] = 1;
+
       int door = (int)random(xs, xe);
-      maze[door][corte] = 1; //passagem
-      if(xs!=1 && maze[xs-1][corte]==1)
-        maze[xs][corte] = 1; //passagem em t
-      if(xe!=maze.length-1 && maze[xe][corte] == 1)
-        maze[xe-1][corte] = 1; //passagem em t
-      
+      maze[door][corte] = 0; //passagem
+      if (xs!=1 && maze[xs-1][corte]==0)
+        maze[xs][corte] = 0; //passagem em t
+      if (xe!=maze.length-1 && maze[xe][corte] == 0)
+        maze[xe-1][corte] = 0; //passagem em t
+
       partition(xs, xe, corte+1, ye, depth+1);
       partition(xs, xe, ys, corte, depth+1);
-      
     } else { //corto no axis y
-      if(xe-xs<=3) return;
-      
+      if (xe-xs<=3) { 
+        int[] s = {xs, ys}, e = {xe, ye};
+        paintByDifficulty(s, e);
+        return;
+      }
+
       int corte = xs + (int)random(xe-xs-2)+1;
-      for(int i=ys; i<ye; i++)
-        maze[corte][i] = 0;
-      
+      for (int i=ys; i<ye; i++)
+        maze[corte][i] = 1;
+
       int door = (int)random(ys, ye);
-      maze[corte][door] = 1; //passagem
-      if(ys!=1 && maze[corte][ys-1]==1)
-        maze[corte][ys] = 1; //passagem em t
-      if(ye!=maze[0].length-1 && maze[corte][ye] == 1)
-        maze[corte][ye-1] = 1; //passagem em t
-      
+      maze[corte][door] = 0; //passagem
+      if (ys!=1 && maze[corte][ys-1]==0)
+        maze[corte][ys] = 0; //passagem em t
+      if (ye!=maze[0].length-1 && maze[corte][ye] == 0)
+        maze[corte][ye-1] = 0; //passagem em t
+
       partition(corte+1, xe, ys, ye, depth+1);
       partition(xs, corte, ys, ye, depth+1);
     }
   }
+
+  void paintByDifficulty(int[] start, int[] end) {
+    int diff = int(randomGaussian()*diffVar)+diffBase;
+    for(int i=start[0]; i<end[0]; i++)
+      for(int j=start[1]; j<end[1]; j++)
+        maze[i][j] = -diff;
+  }
+
 
   boolean checkCompletion() {
     int[][] stack = new int[(N-1)*(M-1)][2];
