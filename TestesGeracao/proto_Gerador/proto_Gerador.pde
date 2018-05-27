@@ -2,6 +2,8 @@ int N = 50, M = 50;
 Gerador G;
 float stepX, stepY;
 
+int[] maxEnemies = {0, 1, 3, 4, 7, 10, 15, 16 , 17, 19, 22, 30 };
+
 void setup() {
   size(300, 300);
   //TYPES:
@@ -14,6 +16,7 @@ void setup() {
   noLoop();
   noStroke();
   rectMode(CORNER);
+  ellipseMode(CORNER);
 
   G.generate();
 }

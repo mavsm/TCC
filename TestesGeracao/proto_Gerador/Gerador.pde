@@ -10,8 +10,11 @@ class Gerador {
   String TYPE;
   int[] start = {0, 0}, end = {0, 0};
   int[][] neighbor = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
-  int diffBase = 5;
-  int diffVar = 2;
+  float diffBase = 1;
+  float diffVar = 1;
+  
+  int salasNum = 0;
+  Room[] salas;
 
 
   /////////// INICIALIZADOR /////////
@@ -19,8 +22,13 @@ class Gerador {
     this.TYPE = TYPE;
     this.N = N;
     this.M = M;
-    this.rodadas = rodadas;
+    if (rodadas > 6)
+      this.rodadas = 6;
+    else
+      this.rodadas = rodadas;
     maze = new int[N][M];
+    
+    salas = new Room[128]; //limitar rodadas a 6
     reset(maze);
   }
 
@@ -32,7 +40,7 @@ class Gerador {
         if (maze[i][j] == 1)
           fill(50);
         else
-          fill(250+maze[i][j]*25, 250, 250);
+          fill(255+maze[i][j]*(250/11), 250, 250);
         rect(i*stepX, j*stepY, stepX, stepY);
       }
     fill(200, 20, 20);
@@ -40,9 +48,16 @@ class Gerador {
 
     fill(20, 200, 20);
     rect(stepX*start[0], stepY*start[1], stepX, stepY);
+    
+    for(int i=0; i<salasNum; i++) {
+      if(salas[i].contains(start[0], start[1]))
+        salas[i].numEnemies = 0;
+      salas[i].draw(stepX, stepY);
+    }
   }
 
   void reset(int[][] array) {
+    salasNum = 0;
     for (int i=0; i<array.length; i++) {
       for (int j=0; j<array[i].length; j++) {
         if (j==0 || j==array[i].length-1 || i==0 || i==array.length-1)
@@ -151,10 +166,16 @@ class Gerador {
   }
 
   void paintByDifficulty(int[] start, int[] end) {
-    int diff = int(randomGaussian()*diffVar)+diffBase;
+    int diff = int((randomGaussian()*diffVar)+diffBase) +1;
+    if(diff > 11) diff = 11;
+    else if(diff <= 0) diff = 0;
     for(int i=start[0]; i<end[0]; i++)
       for(int j=start[1]; j<end[1]; j++)
         maze[i][j] = -diff;
+        
+    salas[salasNum] = new Room(start, end, diff);
+    salas[salasNum].generate();
+    salasNum++;
   }
 
 
