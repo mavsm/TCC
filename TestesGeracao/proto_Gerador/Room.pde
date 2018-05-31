@@ -16,11 +16,7 @@ class Room{
 
      numEnemies = ((xe-xs)*(ye-ys))/(10*(1 - difficultyLevel/12));
      if(numEnemies > maxEnemies[difficultyLevel])
-       numEnemies = maxEnemies[difficultyLevel];
-     //numEnemies = int(float(difficultyLevel/11)*numEnemies);
-     //if(numEnemies < 3) numEnemies = 0;
-     
-     print(difficultyLevel + " : " + numEnemies + "\n" );
+       numEnemies = maxEnemies[difficultyLevel];     
      
      area = new int[numEnemies][2];
      

@@ -7,19 +7,24 @@ class Gerador {
   int N, M;
   int[][] maze;
   int rodadas;
-  String TYPE;
   int[] start = {0, 0}, end = {0, 0};
   int[][] neighbor = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
-  float diffBase = 1;
-  float diffVar = 1;
   
   int salasNum = 0;
   Room[] salas;
-
+  
+  
+  
+  //VARIAVEIS MODIFICADAS A CADA ROUND
+  int moreDoors = 20; //exploration
+  float diffBase = 1; //difficulty
+  float diffVar = 1; //difficulty
+  float chanceSmall = 0.5, chanceEither =  0.4; //exploration
+  
 
   /////////// INICIALIZADOR /////////
-  Gerador(int N, int M, int rodadas, String TYPE) {
-    this.TYPE = TYPE;
+  Gerador(int N, int M, int rodadas) {
+  
     this.N = N;
     this.M = M;
     if (rodadas > 6)
@@ -67,6 +72,31 @@ class Gerador {
       }
     }
   }
+  
+  //DA UPDATE NOS VALORES
+  //BUSCAR COMO FAZER UMA MUDANCA MAIS CONTROLADA, MENOS CAOTICA
+  void update(int scoreDiff, int scoreExp) {
+    int newDoors = (int)random(10, N);
+    moreDoors = scoreExp*moreDoors + (5-scoreExp)*newDoors;
+    moreDoors /= 5;
+    
+    float newSmall = random(1);
+    float newEither = random(1-newSmall);
+    chanceSmall = scoreExp*chanceSmall + (5-scoreExp)*newSmall;
+    chanceSmall /= 5;
+    chanceEither = scoreExp*chanceEither + (5-scoreExp)*newEither;
+    chanceEither /= 5;
+    
+    float newBase = random(10);
+    float newVar = random(5);
+    diffBase = scoreDiff*diffBase + (5-scoreDiff)*newBase;
+    diffBase /= 5;
+    diffVar = scoreDiff*diffVar + (5-scoreDiff)*newVar;
+    diffVar /= 5;
+    
+    print("EXP: "+moreDoors + " : " + chanceSmall + " : " + chanceEither + "\n");
+    print("DIFF: "+diffBase + " : " + diffVar + "\n");
+  }
 
   /////////// FUNÇÕES GERADORAS ////////
   void generate() {
@@ -105,9 +135,9 @@ class Gerador {
     int dify = ye-ys, difx = xe-xs;
     char decide = 'x';
     float path = random(1);
-    if (difx == dify || path < 0.4) {//pega um axis qualquer
+    if (difx == dify || path < chanceEither) {//pega um axis qualquer
       if (random(1) < 0.5) decide = 'y';
-    } else if (path < 1) { //pega o menor axis
+    } else if (path < chanceEither + chanceSmall) { //pega o menor axis
       if (dify < difx) decide = 'y';
     } else { //pega o maior axis
       if (dify > difx) decide = 'y';
@@ -133,13 +163,18 @@ class Gerador {
       for (int i=xs; i<xe; i++)
         maze[i][corte] = 1;
 
-      int door = (int)random(xs, xe);
-      maze[door][corte] = 0; //passagem
+      int numDoor = 1;
+      for(int size = (xe-xs); size > moreDoors; size/=2, numDoor+=1);
+
+      for (int i=0; i<numDoor; i++) {
+        int door = (int)random(xs, xe);
+        maze[door][corte] = 0; //passagem
+      }
       if (xs!=1 && maze[xs-1][corte]==0)
         maze[xs][corte] = 0; //passagem em t
       if (xe!=maze.length-1 && maze[xe][corte] == 0)
         maze[xe-1][corte] = 0; //passagem em t
-
+      
       partition(xs, xe, corte+1, ye, depth+1);
       partition(xs, xe, ys, corte, depth+1);
     } else { //corto no axis y
@@ -153,8 +188,13 @@ class Gerador {
       for (int i=ys; i<ye; i++)
         maze[corte][i] = 1;
 
-      int door = (int)random(ys, ye);
-      maze[corte][door] = 0; //passagem
+      int numDoor = 1;
+      for(int size = (xe-xs); size > moreDoors; size/=2, numDoor+=1);
+
+      for (int i=0; i<numDoor; i++) {
+        int door = (int)random(ys, ye);
+        maze[corte][door] = 0; //passagem
+      }
       if (ys!=1 && maze[corte][ys-1]==0)
         maze[corte][ys] = 0; //passagem em t
       if (ye!=maze[0].length-1 && maze[corte][ye] == 0)
