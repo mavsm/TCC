@@ -87,13 +87,18 @@ class Gerador {
     chanceEither = scoreExp*chanceEither + (5-scoreExp)*newEither;
     chanceEither /= 5;
     
-    float newBase = random(10);
+    float newBase = 0;
+    if(diffBase < 5)
+      newBase = random(diffBase+3, 11);
+    else
+      newBase = random(0, diffBase-3);
     float newVar = random(5);
     diffBase = scoreDiff*diffBase + (5-scoreDiff)*newBase;
     diffBase /= 5;
     diffVar = scoreDiff*diffVar + (5-scoreDiff)*newVar;
     diffVar /= 5;
     
+    if(scoreDiff == 5 && diffBase<11) diffBase+=.5;
     print("EXP: "+moreDoors + " : " + chanceSmall + " : " + chanceEither + "\n");
     print("DIFF: "+diffBase + " : " + diffVar + "\n");
   }
