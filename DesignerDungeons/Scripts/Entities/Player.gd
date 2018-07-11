@@ -1,5 +1,6 @@
 extends "res://Scripts/Entities/Entity.gd"
 
+#Implements player movement
 func control(delta):
 	$Body.look_at(get_global_mouse_position())
 	
@@ -13,3 +14,6 @@ func control(delta):
 		vel = Vector2(-speed, 0)*delta
 	else:
 		vel = Vector2(0, 0)
+	
+	if Input.is_action_pressed("shoot"):
+		shoot()
