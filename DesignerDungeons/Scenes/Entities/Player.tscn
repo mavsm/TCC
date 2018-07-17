@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 30, 30 )
+extents = Vector2( 25.3946, 27.8684 )
 
 [node name="Player" instance=ExtResource( 1 )]
 
@@ -16,6 +16,7 @@ script = ExtResource( 2 )
 Bullet = ExtResource( 3 )
 speed = 200
 shot_cooldown = 0.25
+hp = 200
 
 [node name="Body" parent="." index="1"]
 

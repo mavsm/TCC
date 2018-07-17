@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Pl.png-cc5476bd8d4b0ded2ae7e5acab87aa9b.stex"
+path="res://.import/PlTurret?.png-03fe64415168019f9952222c9593e472.stex"
 
 [deps]
 
-source_file="res://Assets/Pl.png"
-source_md5="ce1744bf1de2137cd08e4e0e76f2e242"
+source_file="res://Assets/PlTurret?.png"
+source_md5="d9ad6e1c70b841009b0abee803424a83"
 
-dest_files=[ "res://.import/Pl.png-cc5476bd8d4b0ded2ae7e5acab87aa9b.stex" ]
-dest_md5="9c38bbeed6e4a246ffac75ff2ac9b03b"
+dest_files=[ "res://.import/PlTurret?.png-03fe64415168019f9952222c9593e472.stex" ]
+dest_md5="b0877c52601d790d1faa031c68610926"
 
 [params]
 

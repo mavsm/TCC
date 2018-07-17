@@ -12,6 +12,7 @@ script = ExtResource( 1 )
 Bullet = null
 speed = null
 shot_cooldown = null
+hp = null
 
 [node name="shoot_timer" type="Timer" parent="." index="0"]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Pl.png-cc5476bd8d4b0ded2ae7e5acab87aa9b.stex"
+path="res://.import/EnSchut.png-ddc6fa613570b0e419209ad3284e93b5.stex"
 
 [deps]
 
-source_file="res://Assets/Pl.png"
-source_md5="ce1744bf1de2137cd08e4e0e76f2e242"
+source_file="res://Assets/EnSchut.png"
+source_md5="415d0755334f7a556333668e96295378"
 
-dest_files=[ "res://.import/Pl.png-cc5476bd8d4b0ded2ae7e5acab87aa9b.stex" ]
-dest_md5="9c38bbeed6e4a246ffac75ff2ac9b03b"
+dest_files=[ "res://.import/EnSchut.png-ddc6fa613570b0e419209ad3284e93b5.stex" ]
+dest_md5="9e1f91c7a812376e31e04f193c88b00d"
 
 [params]
 

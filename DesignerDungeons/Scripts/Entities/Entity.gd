@@ -5,6 +5,7 @@ signal shoot
 export (PackedScene) var Bullet
 export (int) var speed
 export (float) var shot_cooldown
+export (int) var hp
 
 var alive = true
 var vel = Vector2(0, 0)
@@ -18,6 +19,11 @@ func control(delta):
 	pass
 
 func take_dmg(damage):
+	hp -= damage
+	if hp == 0:
+		die()
+
+func die():
 	pass
 
 func shoot():

@@ -7,10 +7,14 @@ export (int) var detect_radius
 func _ready():
 	$Detecter/DetectionRange.shape.radius = detect_radius
 
+func die():
+	queue_free()
+
 func _process(delta):
 	if target:
 		var direction = (target.global_position - global_position).normalized()
 		global_rotation = direction.angle()
+		shoot()
 
 func _on_Detecter_body_entered(body):
 	if body.name == "Player":
