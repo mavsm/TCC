@@ -17,7 +17,9 @@ radius = 128.0
 
 [node name="Enemy" instance=ExtResource( 1 )]
 
+collision_layer = 2
 script = ExtResource( 2 )
+_sections_unfolded = [ "Collision" ]
 Bullet = ExtResource( 3 )
 shot_cooldown = 0.5
 hp = 5

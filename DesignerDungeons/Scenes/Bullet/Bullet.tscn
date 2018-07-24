@@ -19,6 +19,8 @@ lifetime = null
 
 [node name="Sprite" type="Sprite" parent="." index="1"]
 
+_sections_unfolded = [ "Transform" ]
+
 [node name="Life" type="Timer" parent="." index="2"]
 
 process_mode = 1

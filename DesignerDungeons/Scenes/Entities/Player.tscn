@@ -12,7 +12,9 @@ extents = Vector2( 25.3946, 27.8684 )
 
 [node name="Player" instance=ExtResource( 1 )]
 
+collision_mask = 6
 script = ExtResource( 2 )
+_sections_unfolded = [ "Collision" ]
 Bullet = ExtResource( 3 )
 speed = 200
 shot_cooldown = 0.25
@@ -37,8 +39,8 @@ anchor_mode = 1
 rotating = false
 current = true
 zoom = Vector2( 1, 1 )
-limit_left = -10000000
-limit_top = -10000000
+limit_left = 0
+limit_top = 0
 limit_right = 10000000
 limit_bottom = 10000000
 limit_smoothed = false
@@ -55,5 +57,6 @@ drag_margin_bottom = 0.2
 editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
+_sections_unfolded = [ "Limit" ]
 
 

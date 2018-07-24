@@ -17,3 +17,7 @@ func control(delta):
 	
 	if Input.is_action_pressed("shoot"):
 		shoot()
+		
+func set_limits(x, y):
+	$Camera2D.limit_right = x
+	$Camera2D.limit_bottom = y
