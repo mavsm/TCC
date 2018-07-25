@@ -20,6 +20,7 @@ var maze = []
 var rounds = 6
 var chance_either = .4
 var chance_small = .5
+var more_door_limit = 20
 
 
 func setup_maze():
@@ -80,8 +81,15 @@ func partition(xs, xe, ys, ye, depth):
 			maze[i][cut] = 1
 		
 		#insere passagems
-		var door = int(rand_range(xs, xe))
-		maze[door][cut] = 0
+		var num_doors = 1
+		var size = xe-xs
+		while size > more_door_limit:
+			num_doors += 1
+			size /= 2
+		
+		for i in range(num_doors):
+			var door = int(rand_range(xs, xe))
+			maze[door][cut] = 0
 		
 		if xs != 1 and maze[xs-1][cut] == 0:
 			maze[xs][cut] = 0; #passagem em t
@@ -103,8 +111,15 @@ func partition(xs, xe, ys, ye, depth):
 			maze[cut][i] = 1
 		
 		#insere passagems
-		var door = int(rand_range(ys, ye))
-		maze[cut][door] = 0
+		var num_doors = 1
+		var size = ye-ys
+		while size > more_door_limit:
+			num_doors += 1
+			size /= 2
+		
+		for i in range(num_doors):
+			var door = int(rand_range(ys, ye))
+			maze[cut][door] = 0
 		
 		if ys != 1 and maze[cut][ys-1] == 0:
 			maze[cut][ys] = 0; #passagem em t
