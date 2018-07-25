@@ -48,6 +48,11 @@ func _ready():
 	var cell_size = $tiles.cell_size
 	pl.set_limits(cell_size.x*limits.x*1.5, cell_size.y*limits.y*1.5)
 
+func _process(delta):
+	if Input.is_action_pressed("ui_accept"):
+		print(randf_gaussian())
+
+
 func new_enemy(pos):
 	var en = Enemy.instance()
 	add_child(en)
@@ -58,3 +63,6 @@ func _on_shoot(bullet, pos, dir):
 	var b = bullet.instance()
 	add_child(b)
 	b.start(pos, dir)
+
+func randf_gaussian():
+	return sqrt(-2 * log(randf())) * cos(2 * PI * randf())
