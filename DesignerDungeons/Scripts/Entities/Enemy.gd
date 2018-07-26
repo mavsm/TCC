@@ -24,3 +24,13 @@ func _on_Detecter_body_entered(body):
 func _on_Detecter_body_exited(body):
 	if body == target:
 		target = null
+
+
+func _on_IsVisible_screen_entered():
+	$Collision.disabled = false
+	$Detecter/DetectionRange.disabled = false
+
+
+func _on_IsVisible_screen_exited():
+	$Collision.disabled = true
+	$Detecter/DetectionRange.disabled = true

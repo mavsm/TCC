@@ -26,7 +26,7 @@ var chance_small = .5
 var more_door_limit = 20
 
 #Valores de geração da dificuldade
-var diff_base = 7
+var diff_base = 10
 var diff_var = 1
 
 func setup_maze():

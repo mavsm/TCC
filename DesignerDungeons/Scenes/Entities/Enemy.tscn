@@ -55,8 +55,16 @@ audio_bus_name = "Master"
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
+[node name="IsVisible" type="VisibilityNotifier2D" parent="." index="4"]
+
+rect = Rect2( -10, -10, 20, 20 )
+
 [connection signal="body_entered" from="Detecter" to="." method="_on_Detecter_body_entered"]
 
 [connection signal="body_exited" from="Detecter" to="." method="_on_Detecter_body_exited"]
+
+[connection signal="screen_entered" from="IsVisible" to="." method="_on_IsVisible_screen_entered"]
+
+[connection signal="screen_exited" from="IsVisible" to="." method="_on_IsVisible_screen_exited"]
 
 
