@@ -7,7 +7,6 @@ var Player = load("res://Scenes/Entities/Player.tscn")
 var Enemy = load("res://Scenes/Entities/Enemy.tscn")
 
 
-
 func offset(num):
 	return (num+.5)*$tiles.cell_size.x*1.5
 
@@ -53,6 +52,3 @@ func _on_shoot(bullet, pos, dir):
 	var b = bullet.instance()
 	add_child(b)
 	b.start(pos, dir)
-
-func randf_gaussian():
-	return sqrt(-2 * log(randf())) * cos(2 * PI * randf())
