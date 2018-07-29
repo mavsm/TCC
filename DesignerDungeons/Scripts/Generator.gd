@@ -10,6 +10,7 @@ VALORES DENTRO DA MATRIZ E SIGNIFICADOS
 *
 *  3 - INIMIGO
 *
+*  4 - ESPAÇO FINAL
 """
 
 #Valores pertinentes a todos níveis
@@ -28,6 +29,9 @@ var more_door_limit = 20
 #Valores de geração da dificuldade
 var diff_base = 10
 var diff_var = 1
+
+func rand_rangei(a, b):
+	return int(rand_range(a, b))
 
 func setup_maze():
 	randomize()
@@ -49,7 +53,12 @@ func reset_maze():
 
 func generate():
 	partition(1, WIDTH-1, 1, HEIGHT-1, 0)
-	maze[1][1] = 2
+	var start = Vector2(rand_rangei(1, WIDTH/3), rand_rangei(1, HEIGHT/3))
+	var end = Vector2(rand_rangei(2*WIDTH/3, WIDTH-1), rand_rangei(2*HEIGHT/3, HEIGHT-1))
+	maze[start.x][start.y] = 2
+	maze[end.x][end.y] = 4
+	print(end.x)
+	print(end.y)
 
 func decide_cut(xs, xe, ys, ye):
 	var difx = xe - xs
