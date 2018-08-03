@@ -29,13 +29,15 @@ func _ready():
 				else:
 					$tiles.set_cell(i, j, 2)
 				if G.maze[j][i] == 2:
-					$tiles.set_cell(i, j, 3) #Entrada
-					pl.set_global_position(Vector2(offset(i), offset(j)))
-				elif G.maze[j][i] == 3:
 					new_enemy(Vector2(offset(i), offset(j)))
-				elif G.maze[i][j] == 4:
-					$Exit.global_position = Vector2(offset(i), offset(j))
-					$tiles.set_cell(i, j, 4)
+	#Define a entrada
+	$tiles.set_cell(G.START.y, G.START.x, 3)
+	pl.set_global_position(Vector2(offset(G.START.y), offset(G.START.x)))
+	
+	#Define a saída
+	$tiles.set_cell(G.END.y, G.END.x, 4)
+	$Exit.set_global_position(Vector2(offset(G.END.y), offset(G.END.x)))
+	
 	var limits = $tiles.get_used_rect().end
 	var cell_size = $tiles.cell_size
 	pl.set_limits(cell_size.x*limits.x*1.5, cell_size.y*limits.y*1.5)

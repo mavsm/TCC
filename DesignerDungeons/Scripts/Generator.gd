@@ -6,11 +6,8 @@ VALORES DENTRO DA MATRIZ E SIGNIFICADOS
 *
 *  1 - PAREDE
 *
-*  2 - ESPAÇO INICIAL
+*  2 - INIMIGO
 *
-*  3 - INIMIGO
-*
-*  4 - ESPAÇO FINAL
 """
 
 #Valores pertinentes a todos níveis
@@ -18,7 +15,14 @@ const HEIGHT = 50
 const WIDTH = 50
 const MAX_ENEMIES = [0, 1, 3, 4, 7, 10, 15, 16, 17, 19, 22, 30]
 
+const NEIGHBORS = [Vector2(1, 1), Vector2(1, 0), Vector2(1, -1),
+				   Vector2(0, 1),                Vector2(0, -1),
+				   Vector2(-1, 1), Vector2(-1, 0), Vector2(-1, -1)]
+
 var maze = []
+var START = Vector2()
+var END = Vector2()
+
 
 #Valores de geração da topologia
 var rounds = 6
@@ -27,7 +31,7 @@ var chance_small = .5
 var more_door_limit = 20
 
 #Valores de geração da dificuldade
-var diff_base = 10
+var diff_base = 1
 var diff_var = 1
 
 func rand_rangei(a, b):
@@ -55,10 +59,20 @@ func generate():
 	partition(1, WIDTH-1, 1, HEIGHT-1, 0)
 	var start = Vector2(rand_rangei(1, WIDTH/3), rand_rangei(1, HEIGHT/3))
 	var end = Vector2(rand_rangei(2*WIDTH/3, WIDTH-1), rand_rangei(2*HEIGHT/3, HEIGHT-1))
-	maze[start.x][start.y] = 2
-	maze[end.x][end.y] = 4
-	print(end.x)
-	print(end.y)
+	var temp = start
+	var i=0
+	while(maze[temp.x][temp.y] == 1):
+		temp = start + NEIGHBORS[i]
+		i+=1
+	START = temp
+	maze[START.x][START.y] = 0
+	temp = end
+	i=0
+	while(maze[temp.x][temp.y] == 1):
+		temp = end + NEIGHBORS[i]
+		i+=1
+	END = temp
+
 
 func decide_cut(xs, xe, ys, ye):
 	var difx = xe - xs
@@ -161,7 +175,7 @@ func populate_room(start, end):
 		num_enemies = MAX_ENEMIES[diff]
 	
 	for i in range(num_enemies):
-		maze[rand_range(start.x, end.x)][rand_range(start.y, end.y)] = 3
+		maze[rand_range(start.x, end.x)][rand_range(start.y, end.y)] = 2
 
 func randf_gaussian():
 	return sqrt(-2 * log(randf())) * cos(2 * PI * randf())
