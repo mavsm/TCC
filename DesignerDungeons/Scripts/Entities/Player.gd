@@ -21,3 +21,8 @@ func control(delta):
 func set_limits(x, y):
 	$Camera2D.limit_right = x
 	$Camera2D.limit_bottom = y
+
+func die():
+	alive = false
+	print("DIED")
+	emit_signal("died")

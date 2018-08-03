@@ -7,6 +7,7 @@ var Player = load("res://Scenes/Entities/Player.tscn")
 var Enemy = load("res://Scenes/Entities/Enemy.tscn")
 
 
+
 func offset(num):
 	return (num+.5)*$tiles.cell_size.x*1.5
 
@@ -14,6 +15,7 @@ func _ready():
 	var pl = Player.instance()
 	add_child(pl)
 	pl.connect("shoot", self, "_on_shoot")
+	pl.connect("died", self, "_on_Area2D_body_entered")
 	
 	G.setup_maze()
 	
@@ -61,3 +63,4 @@ func _on_shoot(bullet, pos, dir):
 
 func _on_Area2D_body_entered(body):
 	print("Fim!")
+	get_tree().reload_current_scene()
