@@ -1,7 +1,6 @@
 extends Node
 
-var Generator = load("res://Scripts/Generator.gd")
-var G = Generator.new()
+var G = Generator
 
 var Player = load("res://Scenes/Entities/Player.tscn")
 var Enemy = load("res://Scenes/Entities/Enemy.tscn")
@@ -63,4 +62,5 @@ func _on_shoot(bullet, pos, dir):
 
 func _on_Area2D_body_entered(body):
 	print("Fim!")
-	get_tree().reload_current_scene()
+	get_tree().paused = true
+	Transition.goto_scene("res://Testing.tscn")
