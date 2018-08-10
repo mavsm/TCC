@@ -17,7 +17,11 @@ func _process(delta):
 	$Collision.scale *= .988
 
 func hit():
-	queue_free()
+	$Sprite.hide()
+	$Collision.disabled = true
+	set_process(false)
+	$Life.stop()
+	$AnimatedSprite.play()
 
 func _on_Bullet_body_entered(body):
 	if body.has_method('take_dmg'):
@@ -26,4 +30,10 @@ func _on_Bullet_body_entered(body):
 
 
 func _on_Life_timeout():
-	hit()
+	perish()
+
+func perish():
+	queue_free()
+
+func _on_AnimatedSprite_animation_finished():
+	perish()

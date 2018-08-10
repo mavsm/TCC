@@ -37,10 +37,12 @@ var diff_var = 1
 func rand_rangei(a, b):
 	return int(rand_range(a, b))
 
+#CRIA O MAZE
 func setup_maze():
 	randomize()
 	reset_maze()
 
+#RESETA O MAZE
 func reset_maze():
 	maze = []
 	# Monta o nível como um quadrado com paredes nas bordas
@@ -55,6 +57,7 @@ func reset_maze():
 		maze[i].append(1)
 	generate()
 
+#GERA O MAZE DE FATO
 func generate():
 	partition(1, WIDTH-1, 1, HEIGHT-1, 0)
 	var start = Vector2(rand_rangei(1, WIDTH/3), rand_rangei(1, HEIGHT/3))
@@ -66,6 +69,7 @@ func generate():
 		i+=1
 	START = temp
 	maze[START.x][START.y] = 0
+	clean(START, 5)
 	temp = end
 	i=0
 	while(maze[temp.x][temp.y] == 1):
@@ -73,7 +77,7 @@ func generate():
 		i+=1
 	END = temp
 
-
+#DECIDE ONDE CORTAR PARA A PARTIÇÃO BINÁRIA
 func decide_cut(xs, xe, ys, ye):
 	var difx = xe - xs
 	var dify = ye - ys
@@ -95,7 +99,8 @@ func decide_cut(xs, xe, ys, ye):
 			return 'y'
 		return 'x'
 
-
+#RECURSIVA QUE DECIDE ONDE CORTAR, ASSIM FAZENDO A GERAÇÃO VIA
+#PARTIÇÃO BINÁRIA
 func partition(xs, xe, ys, ye, depth):
 	if rounds < depth:
 		populate_room(Vector2(xs, ys), Vector2(xe, ye))
@@ -162,6 +167,7 @@ func partition(xs, xe, ys, ye, depth):
 		partition(cut+1, xe, ys, ye, depth+1)
 		partition(xs, cut, ys, ye, depth+1)
 
+#INSERE INIMIGOS NO QUARTO DELIMITADO POR start E end
 func populate_room(start, end):
 	var diff = int(randf_gaussian()*diff_var + diff_base) +1
 	var area = (end.x - start.x)*(end.y - start.y)
@@ -176,6 +182,28 @@ func populate_room(start, end):
 	
 	for i in range(num_enemies):
 		maze[rand_range(start.x, end.x)][rand_range(start.y, end.y)] = 2
+
+#ESTA FUNÇÃO RETIRA OS INIMIGOS DE place E TODOS OS ESPAÇOS NUM
+#RAIO dist
+func clean(place, dist):
+	var lowX = 0
+	var highX = WIDTH
+	var lowY = 0
+	var highY = HEIGHT
+	if place.x > dist:
+		lowX = -dist
+	if place.y > dist:
+		lowY = -dist
+	if place.x + dist < WIDTH:
+		highX = dist
+	if place.y + dist < HEIGHT:
+		highY = dist
+		
+	for i in range(lowX, highX):
+		for j in range(lowY, highY):
+			if maze[place.x+i][place.y+j] == 2:
+				maze[place.x+i][place.y+j] = 0
+	
 
 func randf_gaussian():
 	return sqrt(-2 * log(randf())) * cos(2 * PI * randf())
