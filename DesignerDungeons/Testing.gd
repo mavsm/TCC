@@ -2,19 +2,12 @@ extends Node
 
 var G = Generator
 
-var Player = load("res://Scenes/Entities/Player.tscn")
 var Enemy = load("res://Scenes/Entities/Enemy.tscn")
-
-
 
 func offset(num):
 	return (num+.5)*$tiles.cell_size.x*1.5
 
 func _ready():
-	var pl = Player.instance()
-	add_child(pl)
-	pl.connect("shoot", self, "_on_shoot")
-	pl.connect("died", self, "_on_Area2D_body_entered")
 	
 	G.setup_maze()
 	
@@ -33,7 +26,7 @@ func _ready():
 					new_enemy(Vector2(offset(i), offset(j)))
 	#Define a entrada
 	$tiles.set_cell(G.START.y, G.START.x, 3)
-	pl.set_global_position(Vector2(offset(G.START.y), offset(G.START.x)))
+	$Player.set_global_position(Vector2(offset(G.START.y), offset(G.START.x)))
 	
 	#Define a saída
 	$tiles.set_cell(G.END.y, G.END.x, 4)
@@ -41,7 +34,7 @@ func _ready():
 	
 	var limits = $tiles.get_used_rect().end
 	var cell_size = $tiles.cell_size
-	pl.set_limits(cell_size.x*limits.x*1.5, cell_size.y*limits.y*1.5)
+	$Player.set_limits(cell_size.x*limits.x*1.5, cell_size.y*limits.y*1.5)
 
 func _process(delta):
 	if Input.is_action_pressed("ui_accept"):

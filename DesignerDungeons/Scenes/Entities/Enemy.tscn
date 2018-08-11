@@ -22,7 +22,7 @@ script = ExtResource( 2 )
 _sections_unfolded = [ "Collision" ]
 Bullet = ExtResource( 3 )
 shot_cooldown = 0.5
-hp = 5
+max_hp = 5
 detect_radius = 300
 
 [node name="Body" parent="." index="1"]

@@ -69,7 +69,7 @@ func generate():
 		i+=1
 	START = temp
 	maze[START.x][START.y] = 0
-	clean(START, 5)
+	clean(START, 3)
 	temp = end
 	i=0
 	while(maze[temp.x][temp.y] == 1):
@@ -186,10 +186,11 @@ func populate_room(start, end):
 #ESTA FUNÇÃO RETIRA OS INIMIGOS DE place E TODOS OS ESPAÇOS NUM
 #RAIO dist
 func clean(place, dist):
-	var lowX = 0
-	var highX = WIDTH
-	var lowY = 0
-	var highY = HEIGHT
+	var lowX = -place.x
+	var highX = WIDTH-place.x
+	var lowY = -place.y
+	var highY = HEIGHT-place.y
+	
 	if place.x > dist:
 		lowX = -dist
 	if place.y > dist:
@@ -199,9 +200,11 @@ func clean(place, dist):
 	if place.y + dist < HEIGHT:
 		highY = dist
 		
-	for i in range(lowX, highX):
-		for j in range(lowY, highY):
+	for i in range(lowX, highX+1):
+		for j in range(lowY, highY+1):
+			print(i, j)
 			if maze[place.x+i][place.y+j] == 2:
+				print("Retirei inimigo")
 				maze[place.x+i][place.y+j] = 0
 	
 

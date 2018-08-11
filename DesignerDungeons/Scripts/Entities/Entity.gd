@@ -1,26 +1,31 @@
 extends KinematicBody2D
 
 signal shoot
+signal health_changed
 
 export (PackedScene) var Bullet
 export (int) var speed
 export (float) var shot_cooldown
-export (int) var hp
+export (int) var max_hp
 
 var alive = true
 var vel = Vector2(0, 0)
 var can_shoot = true
+var hp
 
 func _ready():
 	$shoot_timer.wait_time = shot_cooldown
-	
+	hp =  max_hp
+	emit_signal('health_changed', 100*hp/max_hp)
+
 
 func control(delta):
 	pass
 
 func take_dmg(damage):
+	emit_signal('health_changed', 100*hp/max_hp)
 	hp -= damage
-	if hp == 0:
+	if hp <= 0:
 		die()
 
 func die():

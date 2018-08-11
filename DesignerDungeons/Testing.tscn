@@ -1,14 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Testing.gd" type="Script" id=1]
 [ext_resource path="res://Floors.tres" type="TileSet" id=2]
+[ext_resource path="res://Scenes/UI/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Entities/Player.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Node" type="Node" index="0"]
+[node name="Node" type="Node"]
 
 script = ExtResource( 1 )
 
@@ -46,6 +48,14 @@ audio_bus_name = "Master"
 
 shape = SubResource( 1 )
 
+[node name="HUD" parent="." index="2" instance=ExtResource( 3 )]
+
+[node name="Player" parent="." index="3" instance=ExtResource( 4 )]
+
 [connection signal="body_entered" from="Exit" to="." method="_on_Area2D_body_entered"]
+
+[connection signal="health_changed" from="Player" to="HUD" method="_update_hp_bar"]
+
+[connection signal="shoot" from="Player" to="." method="_on_shoot"]
 
 

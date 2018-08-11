@@ -1,5 +1,7 @@
 extends "res://Scripts/Entities/Entity.gd"
 
+signal died
+
 #Implements player movement
 func control(delta):
 	$Body.look_at(get_global_mouse_position())
@@ -23,6 +25,6 @@ func set_limits(x, y):
 	$Camera2D.limit_bottom = y
 
 func die():
-	alive = false
+	#alive = false
 	print("DIED")
 	emit_signal("died")
