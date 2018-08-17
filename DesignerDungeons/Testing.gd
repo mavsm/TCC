@@ -29,16 +29,12 @@ func _ready():
 	$Player.set_global_position(Vector2(offset(G.START.y), offset(G.START.x)))
 	
 	#Define a saída
-	$tiles.set_cell(G.END.y, G.END.x, 4)
-	$Exit.set_global_position(Vector2(offset(G.END.y), offset(G.END.x)))
+	$tiles.set_cell(G.END.x, G.END.y, 4)
+	$Exit.set_global_position(Vector2(offset(G.END.x), offset(G.END.y)))
 	
 	var limits = $tiles.get_used_rect().end
 	var cell_size = $tiles.cell_size
 	$Player.set_limits(cell_size.x*limits.x*1.5, cell_size.y*limits.y*1.5)
-
-func _process(delta):
-	if Input.is_action_pressed("ui_accept"):
-		print(randf_gaussian())
 
 
 func new_enemy(pos):

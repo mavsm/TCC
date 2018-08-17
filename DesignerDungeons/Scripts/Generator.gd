@@ -23,6 +23,7 @@ var maze = []
 var START = Vector2()
 var END = Vector2()
 
+var bounds = Rect2(Vector2(0, 0), Vector2(WIDTH, HEIGHT))
 
 #Valores de geração da topologia
 var rounds = 6
@@ -60,8 +61,8 @@ func reset_maze():
 #GERA O MAZE DE FATO
 func generate():
 	partition(1, WIDTH-1, 1, HEIGHT-1, 0)
-	var start = Vector2(rand_rangei(1, WIDTH/3), rand_rangei(1, HEIGHT/3))
-	var end = Vector2(rand_rangei(2*WIDTH/3, WIDTH-1), rand_rangei(2*HEIGHT/3, HEIGHT-1))
+	var start = Vector2(rand_rangei(2, WIDTH/3), rand_rangei(2, HEIGHT/3))
+	var end = Vector2(rand_rangei(2, WIDTH-1), rand_rangei(2*HEIGHT/3, HEIGHT-1))
 	var temp = start
 	var i=0
 	while(maze[temp.x][temp.y] == 1):
@@ -76,7 +77,16 @@ func generate():
 		temp = end + NEIGHBORS[i]
 		i+=1
 	END = temp
-
+	
+	if !bounds.has_point(START):
+		print("PROBLEMA COM START")
+		print(START)
+	if !bounds.has_point(END):
+		print("PROBLEMA COM END")
+		print(END)
+	if START == END:
+		print("ELES TAO DANDO IGUAIS")
+		
 #DECIDE ONDE CORTAR PARA A PARTIÇÃO BINÁRIA
 func decide_cut(xs, xe, ys, ye):
 	var difx = xe - xs
@@ -202,9 +212,7 @@ func clean(place, dist):
 		
 	for i in range(lowX, highX+1):
 		for j in range(lowY, highY+1):
-			print(i, j)
 			if maze[place.x+i][place.y+j] == 2:
-				print("Retirei inimigo")
 				maze[place.x+i][place.y+j] = 0
 	
 
