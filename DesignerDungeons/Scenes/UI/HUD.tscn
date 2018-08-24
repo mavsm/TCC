@@ -4,7 +4,7 @@
 [ext_resource path="res://Assets/UI/BarBorder.png" type="Texture" id=2]
 [ext_resource path="res://Assets/UI/PinkBar.png" type="Texture" id=3]
 
-[node name="CanvasLayer" type="CanvasLayer" index="0"]
+[node name="CanvasLayer" type="CanvasLayer"]
 
 layer = 1
 offset = Vector2( 0, 0 )
@@ -67,7 +67,7 @@ min_value = 0.0
 max_value = 100.0
 step = 1.0
 page = 0.0
-value = 50.0
+value = 100.0
 exp_edit = false
 rounded = false
 texture_under = null

@@ -19,7 +19,6 @@ radius = 128.0
 
 collision_layer = 2
 script = ExtResource( 2 )
-_sections_unfolded = [ "Collision" ]
 Bullet = ExtResource( 3 )
 shot_cooldown = 0.5
 max_hp = 5

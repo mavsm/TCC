@@ -37,6 +37,7 @@ func _ready():
 	$Player.set_limits(cell_size.x*limits.x*1.5, cell_size.y*limits.y*1.5)
 
 
+
 func new_enemy(pos):
 	var en = Enemy.instance()
 	add_child(en)
@@ -53,3 +54,8 @@ func _on_Area2D_body_entered(body):
 	print("Fim!")
 	get_tree().paused = true
 	Transition.goto_scene("res://Testing.tscn")
+
+
+func _on_Player_died():
+	print("Morri")
+	Transition.goto_scene("res://Scenes/UI/GaemOvr.tscn")

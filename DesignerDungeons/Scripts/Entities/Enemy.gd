@@ -27,10 +27,12 @@ func _on_Detecter_body_exited(body):
 
 
 func _on_IsVisible_screen_entered():
+	set_process(true)
 	$Collision.disabled = false
 	$Detecter/DetectionRange.disabled = false
 
 
 func _on_IsVisible_screen_exited():
+	set_process(false)
 	$Collision.disabled = true
 	$Detecter/DetectionRange.disabled = true

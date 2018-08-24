@@ -20,6 +20,7 @@ const NEIGHBORS = [Vector2(1, 1), Vector2(1, 0), Vector2(1, -1),
 				   Vector2(-1, 1), Vector2(-1, 0), Vector2(-1, -1)]
 
 var maze = []
+var rooms = []
 var START = Vector2()
 var END = Vector2()
 
@@ -41,10 +42,12 @@ func rand_rangei(a, b):
 #CRIA O MAZE
 func setup_maze():
 	randomize()
+	rooms = []
 	reset_maze()
 
 #RESETA O MAZE
 func reset_maze():
+	rooms = []
 	maze = []
 	# Monta o nível como um quadrado com paredes nas bordas
 	# com espaço livre dentro
@@ -179,6 +182,8 @@ func partition(xs, xe, ys, ye, depth):
 
 #INSERE INIMIGOS NO QUARTO DELIMITADO POR start E end
 func populate_room(start, end):
+	var bound = Vector2(end.x - start.x, end.y - start.y)
+	rooms.append(Rect2(start, bound))
 	var diff = int(randf_gaussian()*diff_var + diff_base) +1
 	var area = (end.x - start.x)*(end.y - start.y)
 	if diff > 11:

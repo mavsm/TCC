@@ -27,9 +27,9 @@ func control(delta):
 func take_dmg(damage):
 	if invincible:
 		return
-	emit_signal('health_changed', 100*hp/max_hp)
 	emit_signal('took_hit')
 	hp -= damage
+	emit_signal('health_changed', 100*hp/max_hp)
 	if hp <= 0:
 		die()
 
