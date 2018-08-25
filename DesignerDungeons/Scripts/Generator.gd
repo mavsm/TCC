@@ -223,3 +223,18 @@ func clean(place, dist):
 
 func randf_gaussian():
 	return sqrt(-2 * log(randf())) * cos(2 * PI * randf())
+
+func print_params():
+	print("EXPLORAÇÃO:")
+	print(rounds, " ", chance_either, " ", chance_small, " ", more_door_limit)
+	print("DIFICULDADE:")
+	print(diff_base, " ", diff_var)
+
+func change_params(e, d):
+	rounds = (rounds*e + rand_rangei(0, 6)*(4-e))/4
+	chance_either = (chance_either*e + rand_range(0, 1)*(4-e))/4
+	chance_small = (chance_small*e + rand_range(0, 1)*(4-e))/4
+	more_door_limit = (more_door_limit*e + rand_rangei(0, WIDTH)*(4-e))/4
+	
+	diff_base = (diff_base*d + rand_rangei(1, 10)*(4-d))/4
+	diff_var = (diff_var*d + rand_range(0, 2)*(4-d))/4

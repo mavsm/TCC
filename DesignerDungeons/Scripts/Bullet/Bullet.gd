@@ -13,8 +13,10 @@ func start(pos, dir):
 
 func _process(delta):
 	position += vel*delta
+	"""
 	$Sprite.scale *= .988
 	$Collision.scale *= .988
+	"""
 
 func hit():
 	$Sprite.hide()
