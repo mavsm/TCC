@@ -17,4 +17,4 @@ func _on_Apply_pressed():
 	print("Exploracao: ", exploracao_mud)
 	print("Dificuldade: ", dific_mud)
 	Generator.change_params(exploracao_mud, dific_mud)
-	Transition.goto_scene("res://Scenes/UI/ChangeParam.tscn")
+	Transition.goto_scene("res://Testing.tscn")

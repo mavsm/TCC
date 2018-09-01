@@ -36,19 +36,7 @@ var more_door_limit = 20
 var diff_base = 1
 var diff_var = 1
 
-func rand_rangei(a, b):
-	return int(rand_range(a, b))
-
-#CRIA O MAZE
-func setup_maze():
-	randomize()
-	rooms = []
-	reset_maze()
-
-#RESETA O MAZE
-func reset_maze():
-	rooms = []
-	maze = []
+func _ready():
 	# Monta o nível como um quadrado com paredes nas bordas
 	# com espaço livre dentro
 	for i in range(HEIGHT):
@@ -59,6 +47,26 @@ func reset_maze():
 			else:
 				maze[i].append(0)
 		maze[i].append(1)
+
+func rand_rangei(a, b):
+	return int(rand_range(a, b))
+
+#CRIA O MAZE
+func setup_maze():
+	randomize()
+	reset_maze()
+
+#RESETA O MAZE
+func reset_maze():
+	# Monta o nível como um quadrado com paredes nas bordas
+	# com espaço livre dentro
+	for i in range(HEIGHT):
+		for j in range(1, WIDTH-1):
+			if i == 0 or i == HEIGHT-1:
+				maze[i][j] = 1
+			else:
+				maze[i][j] = 0
+		maze[i][WIDTH-1] = 1
 	generate()
 
 #GERA O MAZE DE FATO
@@ -231,7 +239,7 @@ func print_params():
 	print(diff_base, " ", diff_var)
 
 func change_params(e, d):
-	rounds = (rounds*e + rand_rangei(0, 6)*(4-e))/4
+	rounds = (rounds*e + rand_rangei(3, 7)*(4-e))/4
 	chance_either = (chance_either*e + rand_range(0, 1)*(4-e))/4
 	chance_small = (chance_small*e + rand_range(0, 1)*(4-e))/4
 	more_door_limit = (more_door_limit*e + rand_rangei(0, WIDTH)*(4-e))/4

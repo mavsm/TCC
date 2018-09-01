@@ -53,7 +53,7 @@ func _on_shoot(bullet, pos, dir):
 func _on_Area2D_body_entered(body):
 	print("Fim!")
 	get_tree().paused = true
-	Transition.goto_scene("res://Testing.tscn")
+	Transition.goto_scene("res://Scenes/UI/ChangeParam.tscn")
 
 
 func _on_Player_died():
