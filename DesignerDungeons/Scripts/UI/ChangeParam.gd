@@ -18,3 +18,4 @@ func _on_Apply_pressed():
 	print("Dificuldade: ", dific_mud)
 	Generator.change_params(exploracao_mud, dific_mud)
 	Transition.goto_scene("res://Testing.tscn")
+	$Simples.hide()

@@ -40,6 +40,8 @@ func _ready():
 
 func new_enemy(pos):
 	var en = Enemy.instance()
+	en.shot_cooldown = min(1 - G.diff_base/11 + 0.2, .6)
+	en.detect_radius = 200 + max(2*G.diff_base*10, 100)
 	add_child(en)
 	en.connect("shoot", self, "_on_shoot")
 	en.set_global_position(pos)
@@ -58,4 +60,5 @@ func _on_Area2D_body_entered(body):
 
 func _on_Player_died():
 	print("Morri")
+	$Player.set_process(false)
 	Transition.goto_scene("res://Scenes/UI/GaemOvr.tscn")

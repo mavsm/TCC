@@ -30,7 +30,7 @@ var bounds = Rect2(Vector2(0, 0), Vector2(WIDTH, HEIGHT))
 var rounds = 6
 var chance_either = .4
 var chance_small = .5
-var more_door_limit = 20
+var more_door_limit = 6
 
 #Valores de geração da dificuldade
 var diff_base = 1
@@ -246,3 +246,5 @@ func change_params(e, d):
 	
 	diff_base = (diff_base*d + rand_rangei(1, 10)*(4-d))/4
 	diff_var = (diff_var*d + rand_range(0, 2)*(4-d))/4
+	if d > 3 and diff_base < 9.5:
+		diff_base += .5
