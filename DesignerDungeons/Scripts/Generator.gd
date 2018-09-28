@@ -6,7 +6,7 @@ VALORES DENTRO DA MATRIZ E SIGNIFICADOS
 *
 *  1 - PAREDE
 *
-*  2 - INIMIGO
+*  2 - INIMIGO BASICO
 *
 """
 
@@ -33,7 +33,7 @@ var chance_small = .5
 var more_door_limit = 6
 
 #Valores de geração da dificuldade
-var diff_base = 1
+var diff_base = 5
 var diff_var = 1
 
 func _ready():

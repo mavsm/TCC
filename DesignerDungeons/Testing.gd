@@ -9,6 +9,8 @@ func offset(num):
 
 func _ready():
 	
+	$HUD._update_floor_depth()
+	
 	G.setup_maze()
 	
 	$tiles.scale = Vector2(1.5, 1.5)
@@ -40,11 +42,10 @@ func _ready():
 
 func new_enemy(pos):
 	var en = Enemy.instance()
-	en.shot_cooldown = min(1 - G.diff_base/11 + 0.2, .6)
-	en.detect_radius = 200 + max(2*G.diff_base*10, 100)
 	add_child(en)
 	en.connect("shoot", self, "_on_shoot")
 	en.set_global_position(pos)
+	en.diff_properties(G.diff_base)
 
 func _on_shoot(bullet, pos, dir):
 	var b = bullet.instance()
@@ -54,11 +55,13 @@ func _on_shoot(bullet, pos, dir):
 
 func _on_Area2D_body_entered(body):
 	print("Fim!")
+	Global.Floor_depth += 1
 	get_tree().paused = true
 	Transition.goto_scene("res://Scenes/UI/ChangeParam.tscn")
 
 
 func _on_Player_died():
+	Global.Floor_depth = 0
 	print("Morri")
 	$Player.set_process(false)
 	Transition.goto_scene("res://Scenes/UI/GaemOvr.tscn")

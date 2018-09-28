@@ -5,7 +5,7 @@ signal died
 #Implements player movement
 func control(delta):
 	$Body.look_at(get_global_mouse_position())
-	
+	$Collision.look_at(get_global_mouse_position())
 	"""if Input.is_action_pressed('look_up'):
 		$Body.rotation_degrees = 270
 	elif Input.is_action_pressed('look_down'):
