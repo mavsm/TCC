@@ -31,8 +31,8 @@ func _ready():
 	$Player.set_global_position(Vector2(offset(G.START.y), offset(G.START.x)))
 	
 	#Define a saída
-	$tiles.set_cell(G.END.x, G.END.y, 4)
-	$Exit.set_global_position(Vector2(offset(G.END.x), offset(G.END.y)))
+	$tiles.set_cell(G.END.y, G.END.x, 4)
+	$Exit.set_global_position(Vector2(offset(G.END.y), offset(G.END.x)))
 	
 	var limits = $tiles.get_used_rect().end
 	var cell_size = $tiles.cell_size

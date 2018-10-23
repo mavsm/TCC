@@ -33,7 +33,7 @@ var chance_small = .5
 var more_door_limit = 6
 
 #Valores de geração da dificuldade
-var diff_base = 5
+var diff_base = 2
 var diff_var = 1
 
 func _ready():
@@ -95,7 +95,7 @@ func generate():
 	if !bounds.has_point(END):
 		print("PROBLEMA COM END")
 		print(END)
-	if START == END:
+	if START.x  == END.x and START.y  == END.y:
 		print("ELES TAO DANDO IGUAIS")
 		
 #DECIDE ONDE CORTAR PARA A PARTIÇÃO BINÁRIA

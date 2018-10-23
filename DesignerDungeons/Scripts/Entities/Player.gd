@@ -15,17 +15,16 @@ func control(delta):
 	elif Input.is_action_pressed('look_left'):
 		$Body.rotation_degrees = 180
 	"""
-	
-	if Input.is_action_pressed('walk_up'):
-		vel = Vector2(0, -speed)*delta
-	elif Input.is_action_pressed('walk_down'):
-		vel = Vector2(0, speed)*delta
-	elif Input.is_action_pressed('walk_right'):
-		vel = Vector2(speed, 0)*delta
-	elif Input.is_action_pressed('walk_left'):
-		vel = Vector2(-speed, 0)*delta
-	else:
-		vel = .7*vel
+	if vel.length_squared() < speed*delta*speed*delta:
+		if Input.is_action_pressed('walk_up'):
+			vel += Vector2(0, -speed)*delta
+		if Input.is_action_pressed('walk_down'):
+			vel += Vector2(0, speed)*delta
+		if Input.is_action_pressed('walk_right'):
+			vel += Vector2(speed, 0)*delta
+		if Input.is_action_pressed('walk_left'):
+			vel += Vector2(-speed, 0)*delta
+	vel = .7*vel
 	
 	if Input.is_action_pressed("shoot"):
 		shoot()
