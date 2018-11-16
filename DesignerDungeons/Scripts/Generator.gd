@@ -33,7 +33,7 @@ var chance_small = .5
 var more_door_limit = 6
 
 #Valores de geração da dificuldade
-var diff_base = 2
+var diff_base = 1
 var diff_var = 1
 
 func _ready():
@@ -73,7 +73,7 @@ func reset_maze():
 func generate():
 	partition(1, WIDTH-1, 1, HEIGHT-1, 0)
 	var start = Vector2(rand_rangei(2, WIDTH/3), rand_rangei(2, HEIGHT/3))
-	var end = Vector2(rand_rangei(2, WIDTH-1), rand_rangei(2*HEIGHT/3, HEIGHT-1))
+	var end = Vector2(rand_rangei(2*WIDTH/3, WIDTH-1), rand_rangei(2, HEIGHT-1))
 	var temp = start
 	var i=0
 	while(maze[temp.x][temp.y] == 1):
@@ -204,7 +204,7 @@ func populate_room(start, end):
 		num_enemies = MAX_ENEMIES[diff]
 	
 	for i in range(num_enemies):
-		maze[rand_range(start.x, end.x)][rand_range(start.y, end.y)] = 2
+		maze[rand_range(start.x, end.x)][rand_range(start.y, end.y)] = 2 + diff
 
 #ESTA FUNÇÃO RETIRA OS INIMIGOS DE place E TODOS OS ESPAÇOS NUM
 #RAIO dist
@@ -225,7 +225,7 @@ func clean(place, dist):
 		
 	for i in range(lowX, highX+1):
 		for j in range(lowY, highY+1):
-			if maze[place.x+i][place.y+j] == 2:
+			if maze[place.x+i][place.y+j] >= 2:
 				maze[place.x+i][place.y+j] = 0
 	
 

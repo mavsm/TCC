@@ -45,7 +45,8 @@ class Gerador {
         if (maze[i][j] == 1)
           fill(50);
         else
-          fill(255+maze[i][j]*(250/11), 250, 250);
+          fill(250, 250, 250);
+          //fill(255+maze[i][j]*(250/11), 250, 250);
         rect(i*stepX, j*stepY, stepX, stepY);
       }
     fill(200, 20, 20);
@@ -57,7 +58,7 @@ class Gerador {
     for(int i=0; i<salasNum; i++) {
       if(salas[i].contains(start[0], start[1]))
         salas[i].numEnemies = 0;
-      salas[i].draw(stepX, stepY);
+      //salas[i].draw(stepX, stepY);
     }
   }
 
@@ -109,9 +110,15 @@ class Gerador {
 
   /////////// FUNÇÕES GERADORAS ////////
   void generate() {
-    partition(1, maze.length-1, 1, maze[0].length-1, 0);
     
 
+//    partition(1, maze.length-1, 1, maze[0].length-1, 0);
+ /*   for(int i=1; i<N-1; i++)
+      for(int j=1; j<M-1; j++){
+        if(random(0, 1) < 0.4)
+          maze[i][j] = 1;
+      }
+*/
     //gera começo e fim
     int[] temp = {(int)random(1, N-1), (int)random(1, M/3)};
 
@@ -139,8 +146,8 @@ class Gerador {
     maze[start[0]][start[1]] = 0;
     maze[end[0]][end[1]] = 0;
   }
-
-  char decideCut(int xs, int xe, int ys, int ye) {
+}
+/*  char decideCut(int xs, int xe, int ys, int ye) {
     int dify = ye-ys, difx = xe-xs;
     char decide = 'x';
     float path = random(1);
@@ -256,4 +263,4 @@ class Gerador {
     }
     return false;
   }
-}
+}*/

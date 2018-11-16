@@ -24,8 +24,8 @@ func _ready():
 					$tiles.set_cell(i, j, 1)
 				else:
 					$tiles.set_cell(i, j, 2)
-				if G.maze[j][i] == 2:
-					new_enemy(Vector2(offset(i), offset(j)))
+				if G.maze[j][i] >= 2:
+					new_enemy(Vector2(offset(i), offset(j)), G.maze[j][i]-2)
 	#Define a entrada
 	$tiles.set_cell(G.START.y, G.START.x, 3)
 	$Player.set_global_position(Vector2(offset(G.START.y), offset(G.START.x)))
@@ -40,12 +40,12 @@ func _ready():
 
 
 
-func new_enemy(pos):
+func new_enemy(pos, diff):
 	var en = Enemy.instance()
 	add_child(en)
 	en.connect("shoot", self, "_on_shoot")
 	en.set_global_position(pos)
-	en.diff_properties(G.diff_base)
+	en.diff_properties(diff)
 
 func _on_shoot(bullet, pos, dir):
 	var b = bullet.instance()
@@ -63,5 +63,5 @@ func _on_Area2D_body_entered(body):
 func _on_Player_died():
 	Global.Floor_depth = 0
 	print("Morri")
-	$Player.set_process(false)
+	get_tree().paused = true
 	Transition.goto_scene("res://Scenes/UI/GaemOvr.tscn")

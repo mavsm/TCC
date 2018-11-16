@@ -27,9 +27,9 @@ void keyPressed() {
     G.reset(G.maze);
     G.generate();
   } else if (key == 'c') {
-    if (G.checkCompletion())
+ //   if (G.checkCompletion())
       print("Completável!!\n");
-    else
+   // else
       print("Não completável...\n");
   } else if (key == '1') {
     G.reset(G.maze);

@@ -45,7 +45,7 @@ func shoot():
 
 func _physics_process(delta):
 	control(delta)
-	move_and_collide(vel)
+	move_and_slide(vel/delta)
 
 func _on_shoot_timer_timeout():
 	can_shoot = true
