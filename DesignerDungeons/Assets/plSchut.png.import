@@ -7,10 +7,7 @@ path="res://.import/plSchut.png-5c01bf2fc49b2370a0ec2b31ac127a9c.stex"
 [deps]
 
 source_file="res://Assets/plSchut.png"
-source_md5="aaa6fc474673383fc94eec806bda126e"
-
 dest_files=[ "res://.import/plSchut.png-5c01bf2fc49b2370a0ec2b31ac127a9c.stex" ]
-dest_md5="a9eaf219b9dcc057d2ab8cbd7c6f99f5"
 
 [params]
 

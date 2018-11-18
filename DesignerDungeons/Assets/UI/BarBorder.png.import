@@ -7,10 +7,7 @@ path="res://.import/BarBorder.png-222d778a9ec2d7ec95d43773a56446b9.stex"
 [deps]
 
 source_file="res://Assets/UI/BarBorder.png"
-source_md5="66568f1c91a9d716ad63b73968c2470e"
-
 dest_files=[ "res://.import/BarBorder.png-222d778a9ec2d7ec95d43773a56446b9.stex" ]
-dest_md5="9c8aa488cdbf6968a3dab811914774f4"
 
 [params]
 

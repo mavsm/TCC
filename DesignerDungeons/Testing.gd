@@ -54,7 +54,6 @@ func _on_shoot(bullet, pos, dir):
 
 
 func _on_Area2D_body_entered(body):
-	print("Fim!")
 	Global.Floor_depth += 1
 	get_tree().paused = true
 	Transition.goto_scene("res://Scenes/UI/ChangeParam.tscn")
@@ -62,6 +61,5 @@ func _on_Area2D_body_entered(body):
 
 func _on_Player_died():
 	Global.Floor_depth = 0
-	print("Morri")
 	get_tree().paused = true
 	Transition.goto_scene("res://Scenes/UI/GaemOvr.tscn")

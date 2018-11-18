@@ -7,10 +7,7 @@ path="res://.import/Expl7.png-a93454f36090fe4089a0fae912e27a37.stex"
 [deps]
 
 source_file="res://Assets/ExplosionAnim/Expl7.png"
-source_md5="d7be0dd4ce5399458ccc07c433eeb0f1"
-
 dest_files=[ "res://.import/Expl7.png-a93454f36090fe4089a0fae912e27a37.stex" ]
-dest_md5="272c0f6c1327e451a7ab4e5eef9a04a2"
 
 [params]
 

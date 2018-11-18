@@ -7,10 +7,7 @@ path="res://.import/EnSchut.png-ddc6fa613570b0e419209ad3284e93b5.stex"
 [deps]
 
 source_file="res://Assets/EnSchut.png"
-source_md5="415d0755334f7a556333668e96295378"
-
 dest_files=[ "res://.import/EnSchut.png-ddc6fa613570b0e419209ad3284e93b5.stex" ]
-dest_md5="9e1f91c7a812376e31e04f193c88b00d"
 
 [params]
 

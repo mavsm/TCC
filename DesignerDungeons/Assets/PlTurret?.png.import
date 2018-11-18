@@ -7,10 +7,7 @@ path="res://.import/PlTurret?.png-03fe64415168019f9952222c9593e472.stex"
 [deps]
 
 source_file="res://Assets/PlTurret?.png"
-source_md5="d9ad6e1c70b841009b0abee803424a83"
-
 dest_files=[ "res://.import/PlTurret?.png-03fe64415168019f9952222c9593e472.stex" ]
-dest_md5="b0877c52601d790d1faa031c68610926"
 
 [params]
 

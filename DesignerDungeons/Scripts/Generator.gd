@@ -245,6 +245,6 @@ func change_params(e, d):
 	more_door_limit = (more_door_limit*e + rand_rangei(0, WIDTH)*(4-e))/4
 	
 	diff_base = (diff_base*d + rand_rangei(1, 10)*(4-d))/4
-	diff_var = (diff_var*d + rand_range(0, 2)*(4-d))/4
+	diff_var = (diff_var*d + rand_range(0, 6)*(4-d))/4
 	if d > 3 and diff_base < 9.5:
 		diff_base += .5
