@@ -5,7 +5,7 @@ var exploracao_mud = 3
 var dific_mud = 3
 
 func _ready():
-	Generator.print_params()
+	pass
 
 func _on_Dif_HSlider_changed(value):
 	dific_mud = value

@@ -1,6 +1,0 @@
-Testei a geração de níveis com alguns algoritmos, entre eles escolha aleatória de que pontos da matriz seriam paredes e chance aleatória para cada bloco ser parede. Ambos estes algoritmos geravam níveis com aparencias desordenadas, e para garantir que os níveis são completáveis são necessárias mais checagens, dado que a posição de início e fim do nível são aleatórias.
-
-Testei também a geração com partição binária do espaço, e os resultados foram bem mais satisfatórios. Um das vantagens deste algoritmo em relação aos outros é a facilidade em garantir que todo ponto do mapa seja acessível, sendo feita já no processo de geração.
-
-Escolhi usar a godot por ja ser familiar com a engine e gostar do jeito que ela funciona. No entando, devido à falta de algumas funcionalidades necessárias para a geração, como uma função randômica de distribuição normal, é necessário o uso de usar a GDNative, uma funcionalidade da godot que possibilita o uso de bibliotecas externas.
-CORREÇÂO -- Aparentemente a falta de geração Gaussiana é facilmente corrigida... apenas por implementar a função de densidade de probabilidade. Logo, pelo menos por enquanto, tentarei transpor o gerador todo para a Godot. Notei isso ao procurar bibliotecas já montadas de funções randômicas, especificamente https://github.com/droxmusic/gdstats/

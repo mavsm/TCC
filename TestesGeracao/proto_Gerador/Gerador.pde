@@ -75,7 +75,7 @@ class Gerador {
   }
   
   //DA UPDATE NOS VALORES
-  //BUSCAR COMO FAZER UMA MUDANCA MAIS CONTROLADA, MENOS CAOTICA
+
   void update(int scoreDiff, int scoreExp) {
     int newDoors = (int)random(10, N);
     moreDoors = scoreExp*moreDoors + (5-scoreExp)*newDoors;
@@ -110,15 +110,7 @@ class Gerador {
 
   /////////// FUNÇÕES GERADORAS ////////
   void generate() {
-    
-
-//    partition(1, maze.length-1, 1, maze[0].length-1, 0);
- /*   for(int i=1; i<N-1; i++)
-      for(int j=1; j<M-1; j++){
-        if(random(0, 1) < 0.4)
-          maze[i][j] = 1;
-      }
-*/
+    partition(1, maze.length-1, 1, maze[0].length-1, 0);
     //gera começo e fim
     int[] temp = {(int)random(1, N-1), (int)random(1, M/3)};
 
@@ -146,8 +138,8 @@ class Gerador {
     maze[start[0]][start[1]] = 0;
     maze[end[0]][end[1]] = 0;
   }
-}
-/*  char decideCut(int xs, int xe, int ys, int ye) {
+
+  char decideCut(int xs, int xe, int ys, int ye) {
     int dify = ye-ys, difx = xe-xs;
     char decide = 'x';
     float path = random(1);
@@ -263,4 +255,4 @@ class Gerador {
     }
     return false;
   }
-}*/
+}

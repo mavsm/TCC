@@ -1,14 +1,19 @@
 # TCC
 Projeto de Conclusão de Curso
+Aluno - Mathias Van Sluys Menck
+Orientador - Marco Dimas Gubitoso
 
 Tema - Geração procedural
 
-  Um problema comum econtrado em alguns jogos que usam geração procedural é, devido a grande variancia de conteúdo que pode ser gerado, tal conteúdo pode tanto ser do gosto do jogador quanto o contrário. Assim,
-neste projeto se propõe desenvolver um jogo em que, com input do jogador, o conteúdo mude para algo mais prazerozo ao jogador.
-O jogo desenvolvido será um simples jogo top-down onde o jogador, controlando seu personagem, completa pequenas dungeons ao chegar à sua saída e derrotar inimigos. Cada uma destas dungeons é composta por um único
-andar cujo layout (paredes, posições de inimigos, posições de saída e entrada) é completamente gerado proceduralmente.
-A cada dungeon completa o jogador deve dar uma nota para algumas qualidades desta dungeon (expansividade, dificuldade) e então selecionar uma dessas qualidades em que a geração da próxima dungeon deve focar. Assim,
-similar a um algoritmo genético, os parâmetros de geração serão modificados de modo que a próxima dungeon gerada espera receber uma nota maior ou igual a anterior na qualidade selecionada.
+  Geração procedural - a tecnologia de computadores gerarem, a partir de regras impostas via código, algum conteúdo como música, peças artísticas, ou até o próprio código - vem sendo usada cada vez mais em jogos virtuais como uma alternativa de se montar coisas como níveis ou equipamento à mão ou até como técnica de se conservar memória. No entanto, nesses jogos, o jogador pode às vezes encontrar algum conteúdo gerado que não gosta, possivelmente repetidas vezes, dependendo do quao vasto ́e o espaco de possibilidade do gerador. Neste projeto então se propõe desenvolver um jogo virtual que se utiliza de geraçâo procedural e deixa o jogador ter algum input na geração, guiando o gerador para tipos de conteúdo do qual ele mais goste.
+
+O jogo desenvolvido é um top-down dungeon crawler, onde o jogador percorre cada nível, indo de um ponto inicial a um ponto final, e o conteúdo gerado são os mapas que comprimem os níveis e também os inimigos que o jogador enfrenta.
 
 Sobre o repositório:
   Na pasta TestesGeração se encontram arquivos de processing que contém geradores de nível, usados para fácil visualização de seus resultados, assim facilitando a escolha do gerador a ser usado no produto final.
+  Na pasta DesignerDungeons se encontram os arquivos do próprio jogo. Para rodá-lo basta executar o arquivo TCC-DesignerDungeons-Lin se num Linux, ou TCC-DesignerDungeons-Win num Windows. Os outros arquivos na pasta são os códigos do jogo e suas cenas, visíveis na engine Godot.
+
+
+\\\\CONTROLES\\\\
+W, A, S, D -- Controle de movimento do personagem
+Mouse -- A mira do personagem segue o mouse, e para atirar basta apertar o botão esquerdo.

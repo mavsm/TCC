@@ -73,7 +73,7 @@ func reset_maze():
 func generate():
 	partition(1, WIDTH-1, 1, HEIGHT-1, 0)
 	var start = Vector2(rand_rangei(2, WIDTH/3), rand_rangei(2, HEIGHT/3))
-	var end = Vector2(rand_rangei(2*WIDTH/3, WIDTH-1), rand_rangei(2, HEIGHT-1))
+	var end = Vector2(rand_rangei(2, WIDTH-1), rand_rangei(2*HEIGHT/3, HEIGHT-1))
 	var temp = start
 	var i=0
 	while(maze[temp.x][temp.y] == 1):
